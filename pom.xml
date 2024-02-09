@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sakurai</groupId>
-	<artifactId>certification</artifactId>
+	<artifactId>tech-certification-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>certification</name>
-	<description>Certification Aplication</description>
+	<name>tech-certification-system</name>
+	<description>Application for a tech certification exam system</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

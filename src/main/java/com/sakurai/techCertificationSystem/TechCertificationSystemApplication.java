@@ -1,13 +1,13 @@
-package com.sakurai.certification;
+package com.sakurai.techCertificationSystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CertificationApplication {
+public class TechCertificationSystemApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CertificationApplication.class, args);
+		SpringApplication.run(TechCertificationSystemApplication.class, args);
 	}
 
 }

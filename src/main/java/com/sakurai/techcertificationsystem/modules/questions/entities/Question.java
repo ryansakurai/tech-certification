@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationsystem.modules.students.entities;
+package com.sakurai.techcertificationsystem.modules.questions.entities;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,8 +20,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "certification")
-public class Certification {
+@Entity(name = "question")
+public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,22 +30,14 @@ public class Certification {
     @Column(length = 50)
     private String technology;
 
-    @Column(length = 10)
-    private int grade;
+    @Column
+    private String description;
 
     @CreationTimestamp
     private LocalDateTime creationTime;
 
-
-    @Column(name = "student_id")
-    private UUID studentId;
-
-    @ManyToOne
-    @JoinColumn(name = "student_id", insertable = false, updatable = false)
-    private Student student;
-
-
-    @OneToMany(mappedBy = "certification")
-    private List<Answer> answers;
+    @OneToMany
+    @JoinColumn(name = "question_id")
+    private List<Alternative> alternatives;
 
 }

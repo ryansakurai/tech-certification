@@ -1,10 +1,10 @@
-package com.sakurai.techCertificationSystem.modules.students.controllers;
+package com.sakurai.techcertificationsystem.modules.students.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sakurai.techCertificationSystem.modules.students.dto.VerifyIfCertifiedDTO;
-import com.sakurai.techCertificationSystem.modules.students.useCases.VerifyIfCertifiedUseCase;
+import com.sakurai.techcertificationsystem.modules.students.dtos.VerifyIfCertifiedDTO;
+import com.sakurai.techcertificationsystem.modules.students.useCases.VerifyIfCertifiedUseCase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

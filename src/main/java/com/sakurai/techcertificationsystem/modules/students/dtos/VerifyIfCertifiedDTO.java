@@ -1,4 +1,4 @@
-package com.sakurai.techCertificationSystem.modules.students.dto;
+package com.sakurai.techcertificationsystem.modules.students.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

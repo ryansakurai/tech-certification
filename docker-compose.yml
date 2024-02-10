@@ -10,3 +10,5 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=tech_certification_system
+    volumes:
+      - ./db-data:/var/lib/postgresql/data

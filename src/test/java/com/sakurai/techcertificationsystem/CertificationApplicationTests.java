@@ -1,4 +1,4 @@
-package com.sakurai.certification;
+package com.sakurai.techcertificationsystem;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

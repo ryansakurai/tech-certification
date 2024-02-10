@@ -1,5 +1,7 @@
 package com.sakurai.techcertificationsystem.modules.students.dtos;
 
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,9 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VerifyIfCertifiedDTO {
+public class AnswerDto {
 
-    private String email;
-    private String technology;
+    private UUID questionId;
+    private UUID alternativeId;
+    private boolean isCorrect;
 
 }

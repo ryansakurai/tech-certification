@@ -17,4 +17,10 @@ public interface CertificationRepository extends JpaRepository<Certification, UU
             "WHERE s.email = :email AND c.technology = :technology")
     public List<Certification> findByStudentEmailAndTechnology(String email, String technology);
 
+    @Query("SELECT c " +
+            "FROM certification c INNER JOIN c.student s " +
+            "ORDER BY c.grade DESC " +
+            "LIMIT :quantity")
+    public List<Certification> findByGradeDesc(int quantity);
+
 }

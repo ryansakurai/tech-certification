@@ -1,8 +1,8 @@
 version: "3.8"
 
 services:
-  postgres:
-    container_name: postgres
+  database:
+    container_name: tech-certification-system-pg
     image: postgres
     ports:
       - 5434:5432

@@ -5,6 +5,10 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sakurai.techcertificationsystem.modules.questions.entities.Alternative;
+import com.sakurai.techcertificationsystem.modules.questions.entities.Question;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,14 +16,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity(name = "answer")
 public class Answer {
 
@@ -39,6 +45,7 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "certification_id", insertable = false, updatable = false)
+    @JsonBackReference
     private Certification certification;
 
 
@@ -47,22 +54,25 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "student_id", insertable = false, updatable = false)
+    @JsonBackReference
     private Student student;
 
 
-    // @Column(name = "question_id")
-    // private UUID questionId;
+    @Column(name = "question_id")
+    private UUID questionId;
 
-    // @ManyToOne
-    // @JoinColumn(name = "question_id")
-    // private Question question;
+    @ManyToOne
+    @JoinColumn(name = "question_id", insertable = false, updatable = false)
+    @JsonBackReference
+    private Question question;
 
 
-    // @Column(name = "alternative_id")
-    // private UUID alternativeId;
+    @Column(name = "alternative_id")
+    private UUID alternativeId;
 
-    // @OneToOne
-    // @JoinColumn(name = "alternative_id", insertable = false, updatable = false)
-    // private Alternative alternative;
+    @OneToOne
+    @JoinColumn(name = "alternative_id", insertable = false, updatable = false)
+    @JsonBackReference
+    private Alternative alternative;
 
 }

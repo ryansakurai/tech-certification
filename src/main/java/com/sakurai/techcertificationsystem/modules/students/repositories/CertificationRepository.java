@@ -12,7 +12,9 @@ import com.sakurai.techcertificationsystem.modules.students.entities.Certificati
 @Repository
 public interface CertificationRepository extends JpaRepository<Certification, UUID> {
 
-    @Query("SELECT c FROM certification c INNER JOIN c.student s WHERE s.email = :email AND c.technology = :technology")
+    @Query("SELECT c " +
+            "FROM certification c INNER JOIN c.student s " +
+            "WHERE s.email = :email AND c.technology = :technology")
     public List<Certification> findByStudentEmailAndTechnology(String email, String technology);
 
 }

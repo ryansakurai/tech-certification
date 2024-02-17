@@ -1,4 +1,6 @@
-package com.sakurai.techcertificationsystem.modules.students.dtos;
+package com.sakurai.techcertificationsystem.certification.dto;
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VerifyIfCertifiedDto {
+public class SubmitionDto {
 
     private String email;
     private String technology;
+    private List<AnswerDto> answers;
 
 }

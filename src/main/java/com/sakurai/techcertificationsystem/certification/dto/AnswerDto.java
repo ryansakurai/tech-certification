@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationsystem.modules.students.dtos;
+package com.sakurai.techcertificationsystem.certification.dto;
 
 import java.util.UUID;
 

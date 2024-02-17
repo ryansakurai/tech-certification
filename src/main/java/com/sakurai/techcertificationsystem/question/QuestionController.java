@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationsystem.modules.questions.controllers;
+package com.sakurai.techcertificationsystem.question;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,12 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sakurai.techcertificationsystem.modules.questions.dtos.PublicAlternativeDto;
-import com.sakurai.techcertificationsystem.modules.questions.dtos.PublicQuestionDto;
-import com.sakurai.techcertificationsystem.modules.questions.entities.Alternative;
-import com.sakurai.techcertificationsystem.modules.questions.entities.Question;
-import com.sakurai.techcertificationsystem.modules.questions.repositories.QuestionRepository;
-
 @RestController
 @RequestMapping("/questions")
 public class QuestionController {
@@ -22,7 +16,7 @@ public class QuestionController {
     @Autowired
     public QuestionRepository repository;
 
-    @GetMapping("/findByTechnology/{technology}")
+    @GetMapping("/{technology}")
     public List<PublicQuestionDto> findByTechnology(@PathVariable String technology) {
         var rawQuestions = this.repository.findByTechnology(technology);
         return rawQuestions.stream()

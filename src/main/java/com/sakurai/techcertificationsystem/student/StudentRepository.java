@@ -1,11 +1,9 @@
-package com.sakurai.techcertificationsystem.modules.students.repositories;
+package com.sakurai.techcertificationsystem.student;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.sakurai.techcertificationsystem.modules.students.entities.Student;
 
 public interface StudentRepository extends JpaRepository<Student, UUID> {
 

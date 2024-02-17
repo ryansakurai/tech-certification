@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationsystem.modules.students.entities;
+package com.sakurai.techcertificationsystem.certification.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sakurai.techcertificationsystem.student.Student;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

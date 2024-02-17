@@ -1,5 +1,6 @@
-package com.sakurai.techcertificationsystem.modules.questions.dtos;
+package com.sakurai.techcertificationsystem.question;
 
+import java.util.List;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -8,12 +9,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class PublicAlternativeDto {
+public class PublicQuestionDto {
 
     private UUID id;
+    private String technology;
     private String description;
+    private List<PublicAlternativeDto> alternatives;
 
 }

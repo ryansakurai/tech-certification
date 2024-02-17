@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationsystem.modules.students.entities;
+package com.sakurai.techcertificationsystem.certification.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -6,8 +6,9 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sakurai.techcertificationsystem.modules.questions.entities.Alternative;
-import com.sakurai.techcertificationsystem.modules.questions.entities.Question;
+import com.sakurai.techcertificationsystem.question.Alternative;
+import com.sakurai.techcertificationsystem.question.Question;
+import com.sakurai.techcertificationsystem.student.Student;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

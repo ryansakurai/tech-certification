@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationsystem.modules.students.useCases;
+package com.sakurai.techcertificationsystem.certification.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,30 +8,31 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sakurai.techcertificationsystem.modules.questions.entities.Alternative;
-import com.sakurai.techcertificationsystem.modules.questions.entities.Question;
-import com.sakurai.techcertificationsystem.modules.questions.repositories.QuestionRepository;
-import com.sakurai.techcertificationsystem.modules.students.dtos.AnswerDto;
-import com.sakurai.techcertificationsystem.modules.students.dtos.SubmitionDto;
-import com.sakurai.techcertificationsystem.modules.students.entities.Answer;
-import com.sakurai.techcertificationsystem.modules.students.entities.Certification;
-import com.sakurai.techcertificationsystem.modules.students.entities.Student;
-import com.sakurai.techcertificationsystem.modules.students.repositories.CertificationRepository;
-import com.sakurai.techcertificationsystem.modules.students.repositories.StudentRepository;
+import com.sakurai.techcertificationsystem.certification.dto.AnswerDto;
+import com.sakurai.techcertificationsystem.certification.dto.SubmitionDto;
+import com.sakurai.techcertificationsystem.certification.model.Answer;
+import com.sakurai.techcertificationsystem.certification.model.Certification;
+import com.sakurai.techcertificationsystem.certification.repository.CertificationRepository;
+import com.sakurai.techcertificationsystem.question.Alternative;
+import com.sakurai.techcertificationsystem.question.Question;
+import com.sakurai.techcertificationsystem.question.QuestionRepository;
+import com.sakurai.techcertificationsystem.student.Student;
+import com.sakurai.techcertificationsystem.student.StudentRepository;
 
 @Service
-public class SubmitAnswersUseCase {
+public class CertificationService {
 
     @Autowired
     private QuestionRepository questionRepository;
 
     @Autowired
     private StudentRepository studentRepository;
-
+    
     @Autowired
     private CertificationRepository certificationRepository;
 
-    public Certification execute(SubmitionDto submition) {
+
+    public Certification submitAnswers(SubmitionDto submition) {
         List<Question> questions = questionRepository.findByTechnology(submition.getTechnology());
 
         correctAnswers(questions, submition.getAnswers());
@@ -102,6 +103,11 @@ public class SubmitAnswersUseCase {
 
     private static double roundToTwoDecimals(double value) {
         return Math.round(value * 100) / 100.0;
+    }
+
+
+    public List<Certification> getRanking(int quantity) {
+        return certificationRepository.findByGradeDesc(quantity);
     }
 
 }

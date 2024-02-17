@@ -8,7 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.sakurai.techcertificationsystem.student.Student;
+import com.sakurai.techcertificationsystem.student.model.Student;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

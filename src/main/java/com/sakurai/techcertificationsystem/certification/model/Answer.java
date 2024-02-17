@@ -6,9 +6,9 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sakurai.techcertificationsystem.question.Alternative;
-import com.sakurai.techcertificationsystem.question.Question;
-import com.sakurai.techcertificationsystem.student.Student;
+import com.sakurai.techcertificationsystem.question.model.Alternative;
+import com.sakurai.techcertificationsystem.question.model.Question;
+import com.sakurai.techcertificationsystem.student.model.Student;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

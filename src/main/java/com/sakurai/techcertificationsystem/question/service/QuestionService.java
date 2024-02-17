@@ -1,24 +1,25 @@
-package com.sakurai.techcertificationsystem.question;
+package com.sakurai.techcertificationsystem.question.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
-@RestController
-@RequestMapping("/questions")
-public class QuestionController {
+import com.sakurai.techcertificationsystem.question.dto.PublicAlternativeDto;
+import com.sakurai.techcertificationsystem.question.dto.PublicQuestionDto;
+import com.sakurai.techcertificationsystem.question.model.Alternative;
+import com.sakurai.techcertificationsystem.question.model.Question;
+import com.sakurai.techcertificationsystem.question.repository.QuestionRepository;
 
+@Service
+public class QuestionService {
+    
     @Autowired
-    public QuestionRepository repository;
+    public QuestionRepository questionRepository;
 
-    @GetMapping("/{technology}")
-    public List<PublicQuestionDto> findByTechnology(@PathVariable String technology) {
-        var rawQuestions = this.repository.findByTechnology(technology);
+    public List<PublicQuestionDto> findByTechnology(String technology) {
+        List<Question> rawQuestions = this.questionRepository.findByTechnology(technology);
         return rawQuestions.stream()
             .map(question -> mapQuestionToDto(question))
             .collect(Collectors.toList());
@@ -26,7 +27,7 @@ public class QuestionController {
 
     // it would probably be better to just filter the results in the query itself, but this is cool
     private static PublicQuestionDto mapQuestionToDto(Question question) {
-        var questionDto = PublicQuestionDto.builder()
+        PublicQuestionDto questionDto = PublicQuestionDto.builder()
             .id(question.getId())
             .technology(question.getTechnology())
             .description(question.getDescription())

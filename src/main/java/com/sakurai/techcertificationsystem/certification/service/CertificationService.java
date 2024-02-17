@@ -13,11 +13,11 @@ import com.sakurai.techcertificationsystem.certification.dto.SubmitionDto;
 import com.sakurai.techcertificationsystem.certification.model.Answer;
 import com.sakurai.techcertificationsystem.certification.model.Certification;
 import com.sakurai.techcertificationsystem.certification.repository.CertificationRepository;
-import com.sakurai.techcertificationsystem.question.Alternative;
-import com.sakurai.techcertificationsystem.question.Question;
-import com.sakurai.techcertificationsystem.question.QuestionRepository;
-import com.sakurai.techcertificationsystem.student.Student;
-import com.sakurai.techcertificationsystem.student.StudentRepository;
+import com.sakurai.techcertificationsystem.question.model.Alternative;
+import com.sakurai.techcertificationsystem.question.model.Question;
+import com.sakurai.techcertificationsystem.question.repository.QuestionRepository;
+import com.sakurai.techcertificationsystem.student.model.Student;
+import com.sakurai.techcertificationsystem.student.repository.StudentRepository;
 
 @Service
 public class CertificationService {

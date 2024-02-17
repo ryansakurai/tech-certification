@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationsystem.question;
+package com.sakurai.techcertificationsystem.question.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

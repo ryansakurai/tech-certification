@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationsystem.question;
+package com.sakurai.techcertificationsystem.question.dto;
 
 import java.util.UUID;
 

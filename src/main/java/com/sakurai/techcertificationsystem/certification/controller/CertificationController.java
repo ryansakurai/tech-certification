@@ -3,6 +3,7 @@ package com.sakurai.techcertificationsystem.certification.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,13 +23,15 @@ public class CertificationController {
     private CertificationService certificationService;
 
     @GetMapping("/rankings/{quantity}")
-    public List<Certification> getRanking(@PathVariable int quantity) {
-        return certificationService.getRanking(quantity);
+    public ResponseEntity<List<Certification>> getRanking(@PathVariable int quantity) {
+        List<Certification> ranking = certificationService.getRanking(quantity);
+        return ResponseEntity.status(200).body(ranking);
     }
 
     @PostMapping()
-    public Certification submitAnswers(@RequestBody SubmitionDto submition) {
-        return this.certificationService.submitAnswers(submition);
+    public ResponseEntity<Certification> submitAnswers(@RequestBody SubmitionDto submition) {
+        Certification certification = this.certificationService.submitAnswers(submition);
+        return ResponseEntity.status(200).body(certification);
     }
 
 }

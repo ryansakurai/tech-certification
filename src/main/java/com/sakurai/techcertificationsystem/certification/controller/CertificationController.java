@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.sakurai.techcertificationsystem.certification.dto.SubmitionDto;
 import com.sakurai.techcertificationsystem.certification.model.Certification;
+import com.sakurai.techcertificationsystem.certification.model.SubmitionDto;
 import com.sakurai.techcertificationsystem.certification.service.CertificationService;
 
 @RestController

@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationsystem.certification.dto;
+package com.sakurai.techcertificationsystem.certification.model;
 
 import java.util.List;
 

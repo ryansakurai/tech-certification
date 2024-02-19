@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sakurai.techcertificationsystem.question.dto.PublicQuestionDto;
+import com.sakurai.techcertificationsystem.question.model.PublicQuestionDto;
 import com.sakurai.techcertificationsystem.question.service.QuestionService;
 
 @RestController

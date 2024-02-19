@@ -8,10 +8,10 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sakurai.techcertificationsystem.certification.dto.AnswerDto;
-import com.sakurai.techcertificationsystem.certification.dto.SubmitionDto;
 import com.sakurai.techcertificationsystem.certification.model.Answer;
+import com.sakurai.techcertificationsystem.certification.model.AnswerDto;
 import com.sakurai.techcertificationsystem.certification.model.Certification;
+import com.sakurai.techcertificationsystem.certification.model.SubmitionDto;
 import com.sakurai.techcertificationsystem.certification.repository.CertificationRepository;
 import com.sakurai.techcertificationsystem.question.model.Alternative;
 import com.sakurai.techcertificationsystem.question.model.Question;

@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sakurai.techcertificationsystem.question.dto.PublicAlternativeDto;
-import com.sakurai.techcertificationsystem.question.dto.PublicQuestionDto;
 import com.sakurai.techcertificationsystem.question.model.Alternative;
+import com.sakurai.techcertificationsystem.question.model.PublicAlternativeDto;
+import com.sakurai.techcertificationsystem.question.model.PublicQuestionDto;
 import com.sakurai.techcertificationsystem.question.model.Question;
 import com.sakurai.techcertificationsystem.question.repository.QuestionRepository;
 

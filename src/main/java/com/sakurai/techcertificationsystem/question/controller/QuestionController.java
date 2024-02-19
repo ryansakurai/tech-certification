@@ -22,7 +22,7 @@ public class QuestionController {
     @GetMapping("/{technology}")
     public ResponseEntity<List<PublicQuestionDto>> findByTechnology(@PathVariable String technology) {
         List<PublicQuestionDto> questions = questionService.findByTechnology(technology);
-        return ResponseEntity.status(200).body(questions);
+        return ResponseEntity.ok().body(questions);
     }
 
 }

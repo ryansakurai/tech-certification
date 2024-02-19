@@ -25,13 +25,13 @@ public class CertificationController {
     @GetMapping("/rankings/{quantity}")
     public ResponseEntity<List<Certification>> getRanking(@PathVariable int quantity) {
         List<Certification> ranking = certificationService.getRanking(quantity);
-        return ResponseEntity.status(200).body(ranking);
+        return ResponseEntity.ok().body(ranking);
     }
 
     @PostMapping()
     public ResponseEntity<Certification> submitAnswers(@RequestBody SubmitionDto submition) {
         Certification certification = this.certificationService.submitAnswers(submition);
-        return ResponseEntity.status(200).body(certification);
+        return ResponseEntity.created(null).body(certification);
     }
 
 }

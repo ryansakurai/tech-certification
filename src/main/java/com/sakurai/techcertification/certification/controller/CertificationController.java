@@ -28,13 +28,14 @@ public class CertificationController {
 
     @GetMapping("/{certificationId}")
     public ResponseEntity<Certification> getCertification(@PathVariable UUID certificationId) {
-        ResponseEntity.ok().build();
+        /* TODO: implement */
         return ResponseEntity.ok().build();
     }
 
 
     @GetMapping("/rankings/{quantity}")
     public ResponseEntity<List<Certification>> getRanking(@PathVariable int quantity) {
+        /* TODO: change return values */
         List<Certification> ranking = certificationService.getRanking(quantity);
         return ResponseEntity.ok().body(ranking);
     }
@@ -42,6 +43,7 @@ public class CertificationController {
 
     @PostMapping()
     public ResponseEntity<Object> submitAnswers(@RequestBody SubmitionDto submition, UriComponentsBuilder ucb) {
+        /* TODO: error handling */
         Certification certification = this.certificationService.submitAnswers(submition);
         URI certificationUri = ucb
             .path("/certifications/{certificationId}")

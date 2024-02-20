@@ -13,6 +13,7 @@ import com.sakurai.techcertification.student.exception.EmailAlreadyInUseExceptio
 import com.sakurai.techcertification.student.model.GetStudentCertificationDto;
 import com.sakurai.techcertification.student.model.GetStudentDto;
 import com.sakurai.techcertification.student.model.Student;
+import com.sakurai.techcertification.student.model.StudentEmailUpdateDto;
 import com.sakurai.techcertification.student.model.StudentRegistrationDto;
 import com.sakurai.techcertification.student.repository.StudentRepository;
 
@@ -34,6 +35,21 @@ public class StudentService {
                                 .fullName(studentDto.getFullName())
                                 .build();
             return studentRepository.save(student);
+        }
+        catch(DataIntegrityViolationException e) {
+            throw new EmailAlreadyInUseException(studentDto.getEmail());
+        }
+    }
+
+
+    public Student updateStudent(String studentEmail, StudentEmailUpdateDto studentDto) {
+        Optional<Student> student = studentRepository.findByEmail(studentEmail);
+        if(student.isEmpty())
+            throw new EntityNotFoundException();
+
+        try {
+            student.get().setEmail(studentDto.getEmail());
+            return studentRepository.save(student.get());
         }
         catch(DataIntegrityViolationException e) {
             throw new EmailAlreadyInUseException(studentDto.getEmail());

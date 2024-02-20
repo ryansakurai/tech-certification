@@ -1,5 +1,6 @@
 package com.sakurai.techcertification.question.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sakurai.techcertification.question.model.PublicQuestionDto;
+import com.sakurai.techcertification.question.model.Question;
 import com.sakurai.techcertification.question.model.QuestionRegistrationDto;
 import com.sakurai.techcertification.question.service.QuestionService;
 
@@ -25,19 +27,25 @@ public class QuestionController {
     private QuestionService questionService;
 
 
-    @GetMapping("/{technology}")
-    public ResponseEntity<Object> findByTechnology(@PathVariable String technology,
-                                                    UriComponentsBuilder ucb) {
-        List<PublicQuestionDto> questions = questionService.findByTechnology(technology);
-        return ResponseEntity.ok().body(questions);
-    }
-
-
     @PostMapping()
     public ResponseEntity<Object> registerQuestion(@RequestBody QuestionRegistrationDto question,
                                                     UriComponentsBuilder ucb) {
-        /* TO BE IMPLEMENTED */
-        return ResponseEntity.ok().build();
+        Question registeredQuestion = this.questionService.registerQuestion(question);
+        URI uri = ucb
+            .path("/questions/{questionTechnology}")
+            .buildAndExpand(registeredQuestion.getTechnology())
+            .toUri();
+
+        return ResponseEntity.created(uri).build();
+    }
+
+
+    @GetMapping("/{technology}")
+    public ResponseEntity<Object> findByTechnology(@PathVariable String technology,
+                                                    UriComponentsBuilder ucb) {
+        /* TODO: error handling */
+        List<PublicQuestionDto> questions = questionService.findByTechnology(technology.toUpperCase());
+        return ResponseEntity.ok().body(questions);
     }
 
 }

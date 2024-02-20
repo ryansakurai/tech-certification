@@ -1,7 +1,6 @@
 package com.sakurai.techcertification.student.controller;
 
 import java.net.URI;
-import java.util.UUID;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import com.sakurai.techcertification.student.exception.EmailAlreadyInUseException;
@@ -51,12 +49,25 @@ public class StudentController {
     }
 
 
-    @PatchMapping("/{studentId}")
-    public ResponseEntity<Object> updateStudent(@PathVariable UUID studentId,
-                                                @RequestBody StudentEmailUpdateDto student,
+    @PatchMapping("/{studentEmail}")
+    public ResponseEntity<Object> updateStudent(@PathVariable String studentEmail,
+                                                @RequestBody StudentEmailUpdateDto newEmail,
                                                 UriComponentsBuilder ucb) {
-        /* TO BE IMPLEMENTED */
-        return ResponseEntity.ok().build();
+        try {
+            Student updatedStudent = this.service.updateStudent(studentEmail, newEmail);
+            URI uri = ucb
+                .path("/students/{studentEmail}")
+                .buildAndExpand(updatedStudent.getEmail())
+                .toUri();
+
+            return ResponseEntity.ok().location(uri).build();
+        }
+        catch(EmailAlreadyInUseException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
+        catch(EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 

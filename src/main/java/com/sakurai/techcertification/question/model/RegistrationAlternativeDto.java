@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class RegistrationAlternativeDto {
 
     private String description;
-    private boolean isCorrect;
+    private boolean correct;
 
 }

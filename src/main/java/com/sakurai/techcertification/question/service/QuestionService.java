@@ -40,7 +40,7 @@ public class QuestionService {
     private static Alternative alternativeRegistrationDtoToEntity(RegistrationAlternativeDto dto) {
         return Alternative.builder()
             .description(dto.getDescription())
-            .isCorrect(dto.isCorrect())
+            .correct(dto.isCorrect())
             .build();
     }
 
@@ -63,7 +63,7 @@ public class QuestionService {
             .description(question.getDescription())
             .build();
 
-        var alternativeDtos = question.getAlternatives().stream()
+        List<PublicAlternativeDto> alternativeDtos = question.getAlternatives().stream()
             .map(alternative -> mapAlternativeToDto(alternative))
             .collect(Collectors.toList());
 

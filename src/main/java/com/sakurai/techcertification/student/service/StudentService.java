@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.sakurai.techcertification.certification.model.Certification;
+import com.sakurai.techcertification.student.exception.EmailAlreadyInUseException;
 import com.sakurai.techcertification.student.model.GetStudentCertificationDto;
 import com.sakurai.techcertification.student.model.GetStudentDto;
 import com.sakurai.techcertification.student.model.Student;
+import com.sakurai.techcertification.student.model.StudentRegistrationDto;
 import com.sakurai.techcertification.student.repository.StudentRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +24,21 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+
+    public Student registerStudent(StudentRegistrationDto studentDto) {
+        /* TODO: email validation */
+        try {
+            var student = Student.builder()
+                                .email(studentDto.getEmail())
+                                .fullName(studentDto.getFullName())
+                                .build();
+            return studentRepository.save(student);
+        }
+        catch(DataIntegrityViolationException e) {
+            throw new EmailAlreadyInUseException(studentDto.getEmail());
+        }
+    }
 
 
     public GetStudentDto getStudentByEmail(String email) {

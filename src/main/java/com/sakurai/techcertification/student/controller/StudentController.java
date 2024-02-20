@@ -1,5 +1,6 @@
 package com.sakurai.techcertification.student.controller;
 
+import java.net.URI;
 import java.util.UUID;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +12,12 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
+import com.sakurai.techcertification.student.exception.EmailAlreadyInUseException;
 import com.sakurai.techcertification.student.model.GetStudentDto;
+import com.sakurai.techcertification.student.model.Student;
 import com.sakurai.techcertification.student.model.StudentEmailUpdateDto;
 import com.sakurai.techcertification.student.model.StudentRegistrationDto;
 import com.sakurai.techcertification.student.service.StudentService;
@@ -28,7 +32,34 @@ public class StudentController {
     @Autowired
     private StudentService service;
 
-    
+
+    @PostMapping()
+    public ResponseEntity<Object> registerStudent(@RequestBody StudentRegistrationDto student,
+                                                    UriComponentsBuilder ucb) {
+        /* TODO: improve error responses */
+        try {
+            this.service.registerStudent(student);
+            URI uri = ucb
+                        .path("/students/{studentId}")
+                        .buildAndExpand(student.getEmail())
+                        .toUri();
+            return ResponseEntity.created(uri).build();
+        }
+        catch(EmailAlreadyInUseException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
+    }
+
+
+    @PatchMapping("/{studentId}")
+    public ResponseEntity<Object> updateStudent(@PathVariable UUID studentId,
+                                                @RequestBody StudentEmailUpdateDto student,
+                                                UriComponentsBuilder ucb) {
+        /* TO BE IMPLEMENTED */
+        return ResponseEntity.ok().build();
+    }
+
+
     @GetMapping("/{studentEmail}")
     public ResponseEntity<GetStudentDto> getStudentByEmail(@PathVariable String studentEmail,
                                                             UriComponentsBuilder ucb) {
@@ -39,23 +70,6 @@ public class StudentController {
         catch(EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-    }
-
-
-    @PostMapping()
-    public ResponseEntity<Object> registerStudent(@RequestBody StudentRegistrationDto student,
-                                                    UriComponentsBuilder ucb) {
-        /* TO BE IMPLEMENTED */
-        return ResponseEntity.ok().build();
-    }
-
-
-    @PatchMapping("/{studentId}")
-    public ResponseEntity<Object> updateStudent(@PathVariable UUID studentId,
-                                                @RequestBody StudentEmailUpdateDto student,
-                                                UriComponentsBuilder ucb) {
-        /* TO BE IMPLEMENTED */
-        return ResponseEntity.ok().build();
     }
 
 }

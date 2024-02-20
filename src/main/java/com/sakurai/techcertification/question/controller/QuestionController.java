@@ -15,8 +15,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sakurai.techcertification.question.model.PublicQuestionDto;
 import com.sakurai.techcertification.question.model.Question;
-import com.sakurai.techcertification.question.model.QuestionRegistrationDto;
+import com.sakurai.techcertification.question.model.RegistrationQuestionDto;
 import com.sakurai.techcertification.question.service.QuestionService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 
 @RestController
@@ -28,7 +30,7 @@ public class QuestionController {
 
 
     @PostMapping()
-    public ResponseEntity<Object> registerQuestion(@RequestBody QuestionRegistrationDto question,
+    public ResponseEntity<Object> registerQuestion(@RequestBody RegistrationQuestionDto question,
                                                     UriComponentsBuilder ucb) {
         Question registeredQuestion = this.questionService.registerQuestion(question);
         URI uri = ucb
@@ -41,11 +43,15 @@ public class QuestionController {
 
 
     @GetMapping("/{technology}")
-    public ResponseEntity<Object> findByTechnology(@PathVariable String technology,
+    public ResponseEntity<List<PublicQuestionDto>> findByTechnology(@PathVariable String technology,
                                                     UriComponentsBuilder ucb) {
-        /* TODO: error handling */
-        List<PublicQuestionDto> questions = questionService.findByTechnology(technology.toUpperCase());
-        return ResponseEntity.ok().body(questions);
+        try {
+            List<PublicQuestionDto> questions = questionService.findByTechnology(technology.toUpperCase());
+            return ResponseEntity.ok().body(questions);
+        }
+        catch(EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

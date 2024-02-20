@@ -50,11 +50,11 @@ public class StudentController {
 
 
     @PatchMapping("/{studentEmail}")
-    public ResponseEntity<Object> updateStudent(@PathVariable String studentEmail,
-                                                @RequestBody StudentEmailUpdateDto newEmail,
-                                                UriComponentsBuilder ucb) {
+    public ResponseEntity<Object> updateStudentEmail(@PathVariable String studentEmail,
+                                                    @RequestBody StudentEmailUpdateDto newEmail,
+                                                    UriComponentsBuilder ucb) {
         try {
-            Student updatedStudent = this.service.updateStudent(studentEmail, newEmail);
+            Student updatedStudent = this.service.updateStudentEmail(studentEmail, newEmail);
             URI uri = ucb
                 .path("/students/{studentEmail}")
                 .buildAndExpand(updatedStudent.getEmail())

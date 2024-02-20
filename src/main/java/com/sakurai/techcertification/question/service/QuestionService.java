@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sakurai.techcertification.question.model.Alternative;
-import com.sakurai.techcertification.question.model.AlternativeRegistrationDto;
+import com.sakurai.techcertification.question.model.RegistrationAlternativeDto;
 import com.sakurai.techcertification.question.model.PublicAlternativeDto;
 import com.sakurai.techcertification.question.model.PublicQuestionDto;
 import com.sakurai.techcertification.question.model.Question;
-import com.sakurai.techcertification.question.model.QuestionRegistrationDto;
+import com.sakurai.techcertification.question.model.RegistrationQuestionDto;
 import com.sakurai.techcertification.question.repository.QuestionRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class QuestionService {
@@ -21,7 +23,7 @@ public class QuestionService {
     public QuestionRepository questionRepository;
 
 
-    public Question registerQuestion(QuestionRegistrationDto dto) {
+    public Question registerQuestion(RegistrationQuestionDto dto) {
         Question entity = Question.builder()
             .technology(dto.getTechnology().toUpperCase())
             .description(dto.getDescription())
@@ -35,7 +37,7 @@ public class QuestionService {
         return this.questionRepository.save(entity);
     }
 
-    private static Alternative alternativeRegistrationDtoToEntity(AlternativeRegistrationDto dto) {
+    private static Alternative alternativeRegistrationDtoToEntity(RegistrationAlternativeDto dto) {
         return Alternative.builder()
             .description(dto.getDescription())
             .isCorrect(dto.isCorrect())
@@ -45,6 +47,9 @@ public class QuestionService {
 
     public List<PublicQuestionDto> findByTechnology(String technology) {
         List<Question> rawQuestions = this.questionRepository.findByTechnology(technology);
+        if(rawQuestions.isEmpty())
+            throw new EntityNotFoundException();
+
         return rawQuestions.stream()
             .map(question -> mapQuestionToDto(question))
             .collect(Collectors.toList());

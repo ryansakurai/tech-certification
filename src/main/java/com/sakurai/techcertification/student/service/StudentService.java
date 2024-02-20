@@ -42,7 +42,7 @@ public class StudentService {
     }
 
 
-    public Student updateStudent(String studentEmail, StudentEmailUpdateDto studentDto) {
+    public Student updateStudentEmail(String studentEmail, StudentEmailUpdateDto studentDto) {
         Optional<Student> student = studentRepository.findByEmail(studentEmail);
         if(student.isEmpty())
             throw new EntityNotFoundException();

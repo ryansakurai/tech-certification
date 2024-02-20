@@ -1,9 +1,6 @@
 package com.sakurai.techcertification.certification.model;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
-
-import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sakurai.techcertification.question.model.Alternative;
@@ -33,12 +30,10 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    
 
     @Column(name = "is_correct")
     private boolean isCorrect;
-
-    @CreationTimestamp
-    private LocalDateTime creationTime;
 
 
     @Column(name = "certification_id")

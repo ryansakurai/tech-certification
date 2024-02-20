@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,13 +26,14 @@ public class Alternative {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @CreationTimestamp
+    private LocalDateTime creationTime;
+
+
     @Column
     private String description;
 
     @Column
     private boolean isCorrect;
-
-    @CreationTimestamp
-    private LocalDateTime creationTime;
 
 }

@@ -13,6 +13,6 @@ public class AnswerDto {
 
     private UUID questionId;
     private UUID alternativeId;
-    private boolean isCorrect;
+    private boolean isSelected;
 
 }

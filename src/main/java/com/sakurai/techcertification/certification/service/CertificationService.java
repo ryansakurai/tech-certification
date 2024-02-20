@@ -61,7 +61,7 @@ public class CertificationService {
         List<Answer> answers = new ArrayList<>();
         for(AnswerDto dto : submition.getAnswers()) {
             Answer answer = Answer.builder()
-                .isCorrect(dto.isCorrect())
+                .isCorrect(dto.isSelected())
                 .certificationId(insertedCertification.getId())
                 .studentId(studentId)
                 .questionId(dto.getQuestionId())
@@ -87,14 +87,14 @@ public class CertificationService {
                     .findFirst()
                     .get();
                 boolean isCorrect = submitedAnswer.getAlternativeId().equals(correctAlternative.getId());
-                submitedAnswer.setCorrect(isCorrect);
+                submitedAnswer.setSelected(isCorrect);
             }
         );
     }
 
     private static double grade(List<AnswerDto> answers) {
         int qtCorrectAnswers = (int) answers.stream()
-            .filter(a -> a.isCorrect())
+            .filter(a -> a.isSelected())
             .count();
 
         double rawGrade = ((double) qtCorrectAnswers / answers.size()) * 10;

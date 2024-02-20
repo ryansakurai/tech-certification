@@ -24,27 +24,30 @@ public class CertificationController {
     
     @Autowired
     private CertificationService certificationService;
-    
-    @PostMapping()
-    public ResponseEntity<Certification> submitAnswers(@RequestBody SubmitionDto submition, UriComponentsBuilder ucb) {
-        Certification certification = this.certificationService.submitAnswers(submition);
-        URI certificationUri = ucb
-        .path("/certifications/{id}")
-        .buildAndExpand(certification.getId())
-        .toUri();
-        return ResponseEntity.created(certificationUri).build();
-    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Certification> getCertification(@PathVariable UUID id) {
-        // TO BE IMPLEMENTED
+
+    @GetMapping("/{certificationId}")
+    public ResponseEntity<Certification> getCertification(@PathVariable UUID certificationId) {
+        ResponseEntity.ok().build();
         return ResponseEntity.ok().build();
     }
+
 
     @GetMapping("/rankings/{quantity}")
     public ResponseEntity<List<Certification>> getRanking(@PathVariable int quantity) {
         List<Certification> ranking = certificationService.getRanking(quantity);
         return ResponseEntity.ok().body(ranking);
+    }
+
+
+    @PostMapping()
+    public ResponseEntity<Object> submitAnswers(@RequestBody SubmitionDto submition, UriComponentsBuilder ucb) {
+        Certification certification = this.certificationService.submitAnswers(submition);
+        URI certificationUri = ucb
+            .path("/certifications/{certificationId}")
+            .buildAndExpand(certification.getId())
+            .toUri();
+        return ResponseEntity.created(certificationUri).build();
     }
 
 }

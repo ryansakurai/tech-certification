@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.sakurai.techcertification.certification.model.Certification;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,10 +14,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import com.sakurai.techcertification.certification.model.Certification;
+
 
 @Data
 @AllArgsConstructor
@@ -30,14 +34,18 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
-    private String email;
-
     @CreationTimestamp
     private LocalDateTime creationTime;
 
 
-    @OneToMany(mappedBy = "student", orphanRemoval = true)
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String fullName;
+
+
+    @OneToMany(mappedBy = "student")
     @JsonManagedReference
     private List<Certification> certifications;
 

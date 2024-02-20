@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,14 +29,16 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @CreationTimestamp
+    private LocalDateTime creationTime;
+
+
     @Column(length = 50)
     private String technology;
 
     @Column
     private String description;
 
-    @CreationTimestamp
-    private LocalDateTime creationTime;
 
     @OneToMany
     @JoinColumn(name = "question_id")

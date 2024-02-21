@@ -1,7 +1,6 @@
 package com.sakurai.techcertification.certification.controller;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,17 +44,23 @@ public class CertificationController {
 
 
     @GetMapping("/{certificationId}")
-    public ResponseEntity<Certification> getCertification(@PathVariable UUID certificationId) {
-        /* TODO: implement */
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Object> getCertificationById(@PathVariable UUID certificationId) {
+        try {
+            var certification = certificationService.getById(certificationId);
+            return ResponseEntity.ok().body(certification);
+        }
+        catch(EntityNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
 
-    @GetMapping("/rankings/{quantity}")
-    public ResponseEntity<List<Certification>> getRanking(@PathVariable int quantity) {
-        /* TODO: change return values */
-        List<Certification> ranking = certificationService.getRanking(quantity);
-        return ResponseEntity.ok().body(ranking);
+    @GetMapping("/{technology}/rankings/{quantity}")
+    public ResponseEntity<Object> getRanking(@PathVariable String technology,
+                                                            @PathVariable int quantity,
+                                                            UriComponentsBuilder ucb) {
+        /* TODO: implement */
+        return ResponseEntity.ok().body(null);
     }
 
 }

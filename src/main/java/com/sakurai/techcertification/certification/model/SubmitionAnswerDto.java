@@ -1,6 +1,6 @@
 package com.sakurai.techcertification.certification.model;
 
-import java.util.List;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubmitionDto {
+public class SubmitionAnswerDto {
 
-    private String email;
-    private String technology;
-    private List<SubmitionAnswerDto> answers;
+    private UUID questionId;
+    private UUID alternativeId;
+    private boolean selected;
 
 }

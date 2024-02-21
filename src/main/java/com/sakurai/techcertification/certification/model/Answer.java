@@ -5,7 +5,6 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sakurai.techcertification.question.model.Alternative;
 import com.sakurai.techcertification.question.model.Question;
-import com.sakurai.techcertification.student.model.Student;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,26 +31,8 @@ public class Answer {
     private UUID id;
     
 
-    @Column(name = "is_correct")
-    private boolean isCorrect;
-
-
-    @Column(name = "certification_id")
-    private UUID certificationId;
-
-    @ManyToOne
-    @JoinColumn(name = "certification_id", insertable = false, updatable = false)
-    @JsonBackReference
-    private Certification certification;
-
-
-    @Column(name = "student_id")
-    private UUID studentId;
-
-    @ManyToOne
-    @JoinColumn(name = "student_id", insertable = false, updatable = false)
-    @JsonBackReference
-    private Student student;
+    @Column(name = "correct")
+    private boolean correct;
 
 
     @Column(name = "question_id")

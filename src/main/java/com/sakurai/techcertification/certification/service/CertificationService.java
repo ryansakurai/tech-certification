@@ -3,7 +3,6 @@ package com.sakurai.techcertification.certification.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,8 @@ import com.sakurai.techcertification.question.repository.QuestionRepository;
 import com.sakurai.techcertification.student.model.Student;
 import com.sakurai.techcertification.student.repository.StudentRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class CertificationService {
 
@@ -32,69 +33,59 @@ public class CertificationService {
     private CertificationRepository certificationRepository;
 
 
-    public Certification submitAnswers(SubmitionDto submition) {
-        List<Question> questions = questionRepository.findByTechnology(submition.getTechnology());
+    public Certification submitAnswers(SubmitionDto submition) throws EntityNotFoundException {
+        /* TODO: verify if only one is selected */
 
-        correctAnswers(questions, submition.getAnswers());
+        List<Question> questions = this.questionRepository.findByTechnology(submition.getTechnology().toUpperCase());
+        if(questions.isEmpty())
+            throw new EntityNotFoundException("No questions available for this technology.");
+
+        List<Answer> correctedAnswers = correctAnswers(questions, submition.getAnswers());
 
         Optional<Student> student = this.studentRepository.findByEmail(submition.getEmail());
-        UUID studentId;
-        if(student.isEmpty()) {
-            Student newStudent = Student.builder()
-                    .email(submition.getEmail())
-                    .build();
-            Student insertedStudent = studentRepository.save(newStudent);
-            studentId = insertedStudent.getId();
-        }
-        else {
-            studentId = student.get().getId();
-        }
+        if(student.isEmpty())
+            throw new EntityNotFoundException("Student not found in database: " + submition.getEmail());
 
         Certification certification = Certification.builder()
-            .technology(submition.getTechnology())
-            .grade(grade(submition.getAnswers()))
-            .studentId(studentId)
+            .technology(submition.getTechnology().toUpperCase())
+            .grade(grade(correctedAnswers))
+            .studentId(student.get().getId())
+            .answers(correctedAnswers)
             .build();
 
-        Certification insertedCertification = this.certificationRepository.save(certification);
-
-        List<Answer> answers = new ArrayList<>();
-        for(AnswerDto dto : submition.getAnswers()) {
-            Answer answer = Answer.builder()
-                .isCorrect(dto.isSelected())
-                .certificationId(insertedCertification.getId())
-                .studentId(studentId)
-                .questionId(dto.getQuestionId())
-                .alternativeId(dto.getAlternativeId())
-                .build();
-            answers.add(answer);
-        }
-
-        insertedCertification.setAnswers(answers);
-
-        return this.certificationRepository.save(insertedCertification);
+        return this.certificationRepository.save(certification);
     }
     
-    private static void correctAnswers(List<Question> dbQuestions, List<AnswerDto> answers) {
-        answers.stream().forEach(
-            submitedAnswer -> {
-                Question dbQuestion = dbQuestions.stream()
-                    .filter(q -> q.getId().equals(submitedAnswer.getQuestionId()))
-                    .findFirst()
-                    .get();
-                Alternative correctAlternative = dbQuestion.getAlternatives().stream()
-                    .filter(alt -> alt.isCorrect())
-                    .findFirst()
-                    .get();
-                boolean isCorrect = submitedAnswer.getAlternativeId().equals(correctAlternative.getId());
-                submitedAnswer.setSelected(isCorrect);
-            }
-        );
+    private List<Answer> correctAnswers(List<Question> dbQuestions, List<AnswerDto> answers) throws EntityNotFoundException {
+        var correctedAnswers = new ArrayList<Answer>();
+
+        for(AnswerDto answer : answers) {
+            Optional<Question> dbQuestion = dbQuestions.stream()
+                .filter(dbq -> dbq.getId().equals(answer.getQuestionId()))
+                .findAny();
+            if(dbQuestion.isEmpty())
+                throw new EntityNotFoundException("Question not found in database: " + answer.getQuestionId());
+
+            Optional<Alternative> dbAlternative = dbQuestion.get().getAlternatives().stream()
+                .filter(alt -> alt.getId().equals(answer.getAlternativeId()))
+                .findAny();
+            if(dbAlternative.isEmpty())
+                throw new EntityNotFoundException("Alternative not found in database: " + answer.getAlternativeId());
+
+            Answer correctedAnswer = Answer.builder()
+                .questionId(dbQuestion.get().getId())
+                .alternativeId(dbAlternative.get().getId())
+                .correct(dbAlternative.get().isCorrect())
+                .build();
+            correctedAnswers.add(correctedAnswer);
+        }
+
+        return correctedAnswers;
     }
 
-    private static double grade(List<AnswerDto> answers) {
+    private static double grade(List<Answer> answers) {
         int qtCorrectAnswers = (int) answers.stream()
-            .filter(a -> a.isSelected())
+            .filter(a -> a.isCorrect())
             .count();
 
         double rawGrade = ((double) qtCorrectAnswers / answers.size()) * 10;

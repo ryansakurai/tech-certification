@@ -24,6 +24,7 @@ public class QuestionService {
 
 
     public Question registerQuestion(RegistrationQuestionDto dto) {
+        /* TODO: verify if only one alternative is correct */
         Question entity = Question.builder()
             .technology(dto.getTechnology().toUpperCase())
             .description(dto.getDescription())

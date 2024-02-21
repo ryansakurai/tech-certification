@@ -18,12 +18,30 @@ import com.sakurai.techcertification.certification.model.Certification;
 import com.sakurai.techcertification.certification.model.SubmitionDto;
 import com.sakurai.techcertification.certification.service.CertificationService;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @RestController
 @RequestMapping("/certifications")
 public class CertificationController {
     
     @Autowired
     private CertificationService certificationService;
+
+
+    @PostMapping()
+    public ResponseEntity<Object> submitAnswers(@RequestBody SubmitionDto submition, UriComponentsBuilder ucb) {
+        try {
+            Certification certification = this.certificationService.submitAnswers(submition);
+            URI certificationUri = ucb
+                .path("/certifications/{certificationId}")
+                .buildAndExpand(certification.getId())
+                .toUri();
+            return ResponseEntity.created(certificationUri).build();
+        }
+        catch(EntityNotFoundException e) {
+            return ResponseEntity.status(422).body(e.getMessage());
+        }
+    }
 
 
     @GetMapping("/{certificationId}")
@@ -38,18 +56,6 @@ public class CertificationController {
         /* TODO: change return values */
         List<Certification> ranking = certificationService.getRanking(quantity);
         return ResponseEntity.ok().body(ranking);
-    }
-
-
-    @PostMapping()
-    public ResponseEntity<Object> submitAnswers(@RequestBody SubmitionDto submition, UriComponentsBuilder ucb) {
-        /* TODO: error handling */
-        Certification certification = this.certificationService.submitAnswers(submition);
-        URI certificationUri = ucb
-            .path("/certifications/{certificationId}")
-            .buildAndExpand(certification.getId())
-            .toUri();
-        return ResponseEntity.created(certificationUri).build();
     }
 
 }

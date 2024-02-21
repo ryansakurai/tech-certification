@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sakurai.techcertification.student.model.Student;
 
 import jakarta.persistence.CascadeType;
@@ -36,14 +35,15 @@ public class Certification {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @CreationTimestamp
+    private LocalDateTime creationTime;
+
+
     @Column(length = 50)
     private String technology;
 
     @Column
     private double grade;
-
-    @CreationTimestamp
-    private LocalDateTime creationTime;
 
 
     @Column(name = "student_id")
@@ -55,8 +55,8 @@ public class Certification {
     private Student student;
 
 
-    @OneToMany(mappedBy = "certification", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "certification_id")
     private List<Answer> answers;
 
 }

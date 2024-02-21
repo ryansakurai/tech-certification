@@ -42,7 +42,7 @@ public class QuestionController {
 
 
     @GetMapping("/{technology}")
-    public ResponseEntity<List<PublicQuestionDto>> findByTechnology(@PathVariable String technology,
+    public ResponseEntity<List<PublicQuestionDto>> getByTechnology(@PathVariable String technology,
                                                                     UriComponentsBuilder ucb) {
         try {
             List<PublicQuestionDto> questions = questionService.findByTechnology(technology.toUpperCase());

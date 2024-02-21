@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import com.sakurai.techcertification.exception.EmailAlreadyInUseException;
+import com.sakurai.techcertification.exception.ErrorDtoWrapper;
 import com.sakurai.techcertification.exception.InvalidKeyException;
 import com.sakurai.techcertification.exception.ResourceNotFoundException;
 import com.sakurai.techcertification.student.model.GetStudentDto;
@@ -43,7 +44,7 @@ public class StudentController {
             return ResponseEntity.created(uri).build();
         }
         catch(EmailAlreadyInUseException e) {
-            return ResponseEntity.status(409).body(e.getMessage());
+            return ResponseEntity.status(409).body( new ErrorDtoWrapper("emailAlreadyInUse", e.getMessage()) );
         }
     }
 
@@ -65,7 +66,7 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         catch(EmailAlreadyInUseException e) {
-            return ResponseEntity.status(409).body(e.getMessage());
+            return ResponseEntity.status(409).body( new ErrorDtoWrapper("emailAlreadyInUse", e.getMessage()) );
         }
     }
 

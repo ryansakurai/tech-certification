@@ -56,11 +56,16 @@ public class CertificationController {
 
 
     @GetMapping("/{technology}/rankings/{quantity}")
-    public ResponseEntity<Object> getRanking(@PathVariable String technology,
-                                                            @PathVariable int quantity,
-                                                            UriComponentsBuilder ucb) {
-        /* TODO: implement */
-        return ResponseEntity.ok().body(null);
+    public ResponseEntity<Object> getRankingByTech(@PathVariable String technology,
+                                             @PathVariable int quantity,
+                                             UriComponentsBuilder ucb) {
+        try{
+            var ranking = certificationService.getRankingByTech(technology, quantity);
+            return ResponseEntity.ok().body(ranking);
+        }
+        catch(EntityNotFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
 }

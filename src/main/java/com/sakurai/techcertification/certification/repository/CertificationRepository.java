@@ -12,15 +12,11 @@ import com.sakurai.techcertification.certification.model.Certification;
 @Repository
 public interface CertificationRepository extends JpaRepository<Certification, UUID> {
 
-    @Query("SELECT c " +
-            "FROM certification c INNER JOIN c.student s " +
-            "WHERE s.email = :email AND c.technology = :technology")
-    public List<Certification> findByStudentEmailAndTechnology(String email, String technology);
-
-    @Query("SELECT c " +
-            "FROM certification c INNER JOIN c.student s " +
-            "ORDER BY c.grade DESC " +
+    @Query("SELECT c "+
+            "FROM certification c "+
+            "WHERE c.technology = :technology "+
+            "ORDER BY c.grade DESC "+
             "LIMIT :quantity")
-    public List<Certification> findByGradeDesc(int quantity);
+    public List<Certification> findGreatestGradesByTechnology(String technology, int quantity);
 
 }

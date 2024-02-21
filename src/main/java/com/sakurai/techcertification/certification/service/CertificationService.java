@@ -15,6 +15,8 @@ import com.sakurai.techcertification.certification.model.AlternativeDto;
 import com.sakurai.techcertification.certification.model.AnswerDto;
 import com.sakurai.techcertification.certification.model.CertificationDto;
 import com.sakurai.techcertification.certification.model.QuestionDto;
+import com.sakurai.techcertification.certification.model.RankingCertificationDto;
+import com.sakurai.techcertification.certification.model.RankingStudentDto;
 import com.sakurai.techcertification.certification.model.SubmitionDto;
 import com.sakurai.techcertification.certification.repository.CertificationRepository;
 import com.sakurai.techcertification.question.model.Alternative;
@@ -124,6 +126,28 @@ public class CertificationService {
                 ).chosenAlternative(
                     new AlternativeDto(answer.getAlternativeId(), answer.getAlternative().getDescription())
                 ).correct(answer.isCorrect())
+                .build()
+            ).toList();
+    }
+
+
+    public List<RankingCertificationDto> getRankingByTech(String technology, int quantity) {
+        List<Certification> certifications = certificationRepository.findGreatestGradesByTechnology(
+            technology.toUpperCase(),
+            quantity)
+        ;
+        if(certifications.isEmpty())
+            throw new EntityNotFoundException("No certifications found for technology: " + technology.toUpperCase());
+
+        return certifications.stream()
+            .map(certification -> RankingCertificationDto.builder()
+                .id(certification.getId())
+                .student(
+                    RankingStudentDto.builder()
+                    .name(certification.getStudent().getFullName())
+                    .email(certification.getStudent().getEmail())
+                    .build()
+                ).grade(certification.getGrade())
                 .build()
             ).toList();
     }

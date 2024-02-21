@@ -19,13 +19,13 @@ import com.sakurai.techcertification.certification.model.RankingCertificationDto
 import com.sakurai.techcertification.certification.model.RankingStudentDto;
 import com.sakurai.techcertification.certification.model.SubmitionDto;
 import com.sakurai.techcertification.certification.repository.CertificationRepository;
+import com.sakurai.techcertification.exception.InvalidKeyException;
+import com.sakurai.techcertification.exception.ResourceNotFoundException;
 import com.sakurai.techcertification.question.model.Alternative;
 import com.sakurai.techcertification.question.model.Question;
 import com.sakurai.techcertification.question.repository.QuestionRepository;
 import com.sakurai.techcertification.student.model.Student;
 import com.sakurai.techcertification.student.repository.StudentRepository;
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class CertificationService {
@@ -40,19 +40,19 @@ public class CertificationService {
     private CertificationRepository certificationRepository;
 
 
-    public Certification submitAnswers(SubmitionDto submition) throws EntityNotFoundException {
+    public Certification submitAnswers(SubmitionDto submition) throws InvalidKeyException {
         /* TODO: verify if only one is selected */
         /* TODO: verify if student is already certified */
 
         List<Question> questions = this.questionRepository.findByTechnology(submition.getTechnology().toUpperCase());
         if(questions.isEmpty())
-            throw new EntityNotFoundException("No questions available for this technology.");
+            throw new InvalidKeyException("technology", submition.getTechnology());
 
         List<Answer> correctedAnswers = correctAnswers(questions, submition.getAnswers());
 
         Optional<Student> student = this.studentRepository.findByEmail(submition.getEmail());
         if(student.isEmpty())
-            throw new EntityNotFoundException("Student not found in database: " + submition.getEmail());
+            throw new InvalidKeyException("email", submition.getEmail());
 
         Certification certification = Certification.builder()
             .technology(submition.getTechnology().toUpperCase())
@@ -64,7 +64,7 @@ public class CertificationService {
         return this.certificationRepository.save(certification);
     }
     
-    private List<Answer> correctAnswers(List<Question> dbQuestions, List<SubmitionAnswerDto> answers) throws EntityNotFoundException {
+    private List<Answer> correctAnswers(List<Question> dbQuestions, List<SubmitionAnswerDto> answers) throws InvalidKeyException {
         var correctedAnswers = new ArrayList<Answer>();
 
         for(SubmitionAnswerDto answer : answers) {
@@ -72,13 +72,13 @@ public class CertificationService {
                 .filter(dbq -> dbq.getId().equals(answer.getQuestionId()))
                 .findAny();
             if(dbQuestion.isEmpty())
-                throw new EntityNotFoundException("Question not found in database: " + answer.getQuestionId());
+                throw new InvalidKeyException("questionId", answer.getQuestionId().toString());
 
             Optional<Alternative> dbAlternative = dbQuestion.get().getAlternatives().stream()
                 .filter(alt -> alt.getId().equals(answer.getAlternativeId()))
                 .findAny();
             if(dbAlternative.isEmpty())
-                throw new EntityNotFoundException("Alternative not found in database: " + answer.getAlternativeId());
+                throw new InvalidKeyException("alternativeId", answer.getAlternativeId().toString());
 
             Answer correctedAnswer = Answer.builder()
                 .questionId(dbQuestion.get().getId())
@@ -104,10 +104,10 @@ public class CertificationService {
     }
 
 
-    public CertificationDto getById(UUID certificationId) {
+    public CertificationDto getById(UUID certificationId) throws ResourceNotFoundException {
         Optional<Certification> entity = certificationRepository.findById(certificationId);
         if(entity.isEmpty())
-            throw new EntityNotFoundException("Certification not found in database: " + certificationId);
+            throw new ResourceNotFoundException("certification", certificationId.toString());
 
         return CertificationDto.builder()
             .id(entity.get().getId())
@@ -131,13 +131,13 @@ public class CertificationService {
     }
 
 
-    public List<RankingCertificationDto> getRankingByTech(String technology, int quantity) {
+    public List<RankingCertificationDto> getRankingByTech(String technology, int quantity) throws ResourceNotFoundException {
         List<Certification> certifications = certificationRepository.findGreatestGradesByTechnology(
             technology.toUpperCase(),
-            quantity)
-        ;
+            quantity
+        );
         if(certifications.isEmpty())
-            throw new EntityNotFoundException("No certifications found for technology: " + technology.toUpperCase());
+            throw new ResourceNotFoundException("ranking", technology);
 
         return certifications.stream()
             .map(certification -> RankingCertificationDto.builder()

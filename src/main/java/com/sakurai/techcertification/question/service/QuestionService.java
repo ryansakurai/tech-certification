@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sakurai.techcertification.exception.ResourceNotFoundException;
 import com.sakurai.techcertification.question.model.Alternative;
 import com.sakurai.techcertification.question.model.RegistrationAlternativeDto;
 import com.sakurai.techcertification.question.model.PublicAlternativeDto;
@@ -13,8 +14,6 @@ import com.sakurai.techcertification.question.model.PublicQuestionDto;
 import com.sakurai.techcertification.question.model.Question;
 import com.sakurai.techcertification.question.model.RegistrationQuestionDto;
 import com.sakurai.techcertification.question.repository.QuestionRepository;
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class QuestionService {
@@ -25,6 +24,8 @@ public class QuestionService {
 
     public Question registerQuestion(RegistrationQuestionDto dto) {
         /* TODO: verify if only one alternative is correct */
+        /* TODO: verify if there's an exact duplicate question-answers set */
+
         Question entity = Question.builder()
             .technology(dto.getTechnology().toUpperCase())
             .description(dto.getDescription())
@@ -46,14 +47,14 @@ public class QuestionService {
     }
 
 
-    public List<PublicQuestionDto> findByTechnology(String technology) {
+    public List<PublicQuestionDto> findByTechnology(String technology) throws ResourceNotFoundException {
         List<Question> rawQuestions = this.questionRepository.findByTechnology(technology);
         if(rawQuestions.isEmpty())
-            throw new EntityNotFoundException();
+            throw new ResourceNotFoundException("question", technology);
 
         return rawQuestions.stream()
             .map(question -> mapQuestionToDto(question))
-            .collect(Collectors.toList());
+            .toList();
     }
 
     // it would probably be better to just filter the results in the query itself, but this is cool

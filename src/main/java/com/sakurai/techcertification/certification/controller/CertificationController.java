@@ -16,8 +16,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.sakurai.techcertification.certification.model.Certification;
 import com.sakurai.techcertification.certification.model.SubmitionDto;
 import com.sakurai.techcertification.certification.service.CertificationService;
+import com.sakurai.techcertification.exception.ErrorDtoWrapper;
+import com.sakurai.techcertification.exception.InvalidKeyException;
+import com.sakurai.techcertification.exception.ResourceNotFoundException;
 
-import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/certifications")
@@ -37,8 +39,8 @@ public class CertificationController {
                 .toUri();
             return ResponseEntity.created(certificationUri).build();
         }
-        catch(EntityNotFoundException e) {
-            return ResponseEntity.status(422).body(e.getMessage());
+        catch(InvalidKeyException e) {
+            return ResponseEntity.status(422).body( new ErrorDtoWrapper("invalidKey", e.getMessage()) );
         }
     }
 
@@ -49,22 +51,22 @@ public class CertificationController {
             var certification = certificationService.getById(certificationId);
             return ResponseEntity.ok().body(certification);
         }
-        catch(EntityNotFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
+        catch(ResourceNotFoundException e) {
+            return ResponseEntity.status(404).body( new ErrorDtoWrapper("resourceNotFound", e.getMessage()) );
         }
     }
 
 
     @GetMapping("/{technology}/rankings/{quantity}")
     public ResponseEntity<Object> getRankingByTech(@PathVariable String technology,
-                                             @PathVariable int quantity,
-                                             UriComponentsBuilder ucb) {
+                                                   @PathVariable int quantity,
+                                                   UriComponentsBuilder ucb) {
         try{
             var ranking = certificationService.getRankingByTech(technology, quantity);
             return ResponseEntity.ok().body(ranking);
         }
-        catch(EntityNotFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
+        catch(ResourceNotFoundException e) {
+            return ResponseEntity.status(404).body( new ErrorDtoWrapper("resourceNotFound", e.getMessage()) );
         }
     }
 

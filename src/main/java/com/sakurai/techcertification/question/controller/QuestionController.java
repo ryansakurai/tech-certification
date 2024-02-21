@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.sakurai.techcertification.exception.ResourceNotFoundException;
 import com.sakurai.techcertification.question.model.PublicQuestionDto;
 import com.sakurai.techcertification.question.model.Question;
 import com.sakurai.techcertification.question.model.RegistrationQuestionDto;
 import com.sakurai.techcertification.question.service.QuestionService;
-
-import jakarta.persistence.EntityNotFoundException;
 
 
 @RestController
@@ -31,7 +30,7 @@ public class QuestionController {
 
     @PostMapping()
     public ResponseEntity<Object> registerQuestion(@RequestBody RegistrationQuestionDto question,
-                                                    UriComponentsBuilder ucb) {
+                                                   UriComponentsBuilder ucb) {
         Question registeredQuestion = this.questionService.registerQuestion(question);
         URI uri = ucb
             .path("/questions/{questionTechnology}")
@@ -44,12 +43,12 @@ public class QuestionController {
 
     @GetMapping("/{technology}")
     public ResponseEntity<List<PublicQuestionDto>> findByTechnology(@PathVariable String technology,
-                                                    UriComponentsBuilder ucb) {
+                                                                    UriComponentsBuilder ucb) {
         try {
             List<PublicQuestionDto> questions = questionService.findByTechnology(technology.toUpperCase());
             return ResponseEntity.ok().body(questions);
         }
-        catch(EntityNotFoundException e) {
+        catch(ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }

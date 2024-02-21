@@ -13,14 +13,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import com.sakurai.techcertification.student.exception.EmailAlreadyInUseException;
+import com.sakurai.techcertification.exception.EmailAlreadyInUseException;
+import com.sakurai.techcertification.exception.InvalidKeyException;
+import com.sakurai.techcertification.exception.ResourceNotFoundException;
 import com.sakurai.techcertification.student.model.GetStudentDto;
 import com.sakurai.techcertification.student.model.Student;
 import com.sakurai.techcertification.student.model.StudentEmailUpdateDto;
 import com.sakurai.techcertification.student.model.StudentRegistrationDto;
 import com.sakurai.techcertification.student.service.StudentService;
-
-import jakarta.persistence.EntityNotFoundException;
 
 
 @RestController
@@ -33,14 +33,13 @@ public class StudentController {
 
     @PostMapping()
     public ResponseEntity<Object> registerStudent(@RequestBody StudentRegistrationDto student,
-                                                    UriComponentsBuilder ucb) {
-        /* TODO: improve error responses */
+                                                  UriComponentsBuilder ucb) {
         try {
             this.service.registerStudent(student);
             URI uri = ucb
-                        .path("/students/{studentId}")
-                        .buildAndExpand(student.getEmail())
-                        .toUri();
+                    .path("/students/{studentId}")
+                    .buildAndExpand(student.getEmail())
+                    .toUri();
             return ResponseEntity.created(uri).build();
         }
         catch(EmailAlreadyInUseException e) {
@@ -51,34 +50,34 @@ public class StudentController {
 
     @PatchMapping("/{studentEmail}")
     public ResponseEntity<Object> updateStudentEmail(@PathVariable String studentEmail,
-                                                    @RequestBody StudentEmailUpdateDto newEmail,
-                                                    UriComponentsBuilder ucb) {
+                                                     @RequestBody StudentEmailUpdateDto newEmail,
+                                                     UriComponentsBuilder ucb) {
         try {
             Student updatedStudent = this.service.updateStudentEmail(studentEmail, newEmail);
             URI uri = ucb
-                .path("/students/{studentEmail}")
-                .buildAndExpand(updatedStudent.getEmail())
-                .toUri();
+                    .path("/students/{studentEmail}")
+                    .buildAndExpand(updatedStudent.getEmail())
+                    .toUri();
 
             return ResponseEntity.ok().location(uri).build();
         }
+        catch(InvalidKeyException e) {
+            return ResponseEntity.notFound().build();
+        }
         catch(EmailAlreadyInUseException e) {
             return ResponseEntity.status(409).body(e.getMessage());
-        }
-        catch(EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
         }
     }
 
 
     @GetMapping("/{studentEmail}")
     public ResponseEntity<GetStudentDto> getStudentByEmail(@PathVariable String studentEmail,
-                                                            UriComponentsBuilder ucb) {
+                                                           UriComponentsBuilder ucb) {
         try {
             var student = service.getStudentByEmail(studentEmail);
             return ResponseEntity.ok().body(student);
         }
-        catch(EntityNotFoundException e) {
+        catch(ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }

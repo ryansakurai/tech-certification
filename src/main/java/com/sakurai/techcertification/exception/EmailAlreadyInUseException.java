@@ -1,4 +1,4 @@
-package com.sakurai.techcertification.student.exception;
+package com.sakurai.techcertification.exception;
 
 import org.springframework.dao.DataIntegrityViolationException;
 

@@ -9,15 +9,15 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.sakurai.techcertification.certification.model.Certification;
-import com.sakurai.techcertification.student.exception.EmailAlreadyInUseException;
+import com.sakurai.techcertification.exception.EmailAlreadyInUseException;
+import com.sakurai.techcertification.exception.InvalidKeyException;
+import com.sakurai.techcertification.exception.ResourceNotFoundException;
 import com.sakurai.techcertification.student.model.GetStudentCertificationDto;
 import com.sakurai.techcertification.student.model.GetStudentDto;
 import com.sakurai.techcertification.student.model.Student;
 import com.sakurai.techcertification.student.model.StudentEmailUpdateDto;
 import com.sakurai.techcertification.student.model.StudentRegistrationDto;
 import com.sakurai.techcertification.student.repository.StudentRepository;
-
-import jakarta.persistence.EntityNotFoundException;
 
 
 @Service
@@ -31,9 +31,9 @@ public class StudentService {
         /* TODO: email validation */
         try {
             var student = Student.builder()
-                                .email(studentDto.getEmail())
-                                .fullName(studentDto.getFullName())
-                                .build();
+                    .email(studentDto.getEmail())
+                    .fullName(studentDto.getFullName())
+                    .build();
             return studentRepository.save(student);
         }
         catch(DataIntegrityViolationException e) {
@@ -42,10 +42,10 @@ public class StudentService {
     }
 
 
-    public Student updateStudentEmail(String studentEmail, StudentEmailUpdateDto studentDto) {
+    public Student updateStudentEmail(String studentEmail, StudentEmailUpdateDto studentDto) throws InvalidKeyException {
         Optional<Student> student = studentRepository.findByEmail(studentEmail);
         if(student.isEmpty())
-            throw new EntityNotFoundException();
+            throw new InvalidKeyException("email", studentEmail);
 
         try {
             student.get().setEmail(studentDto.getEmail());
@@ -57,10 +57,10 @@ public class StudentService {
     }
 
 
-    public GetStudentDto getStudentByEmail(String email) {
+    public GetStudentDto getStudentByEmail(String email) throws ResourceNotFoundException {
         Optional<Student> student = studentRepository.findByEmail(email);
         if(student.isEmpty())
-            throw new EntityNotFoundException();
+            throw new ResourceNotFoundException("student", email);
 
         return GetStudentDto.builder()
                             .email(student.get().getEmail())

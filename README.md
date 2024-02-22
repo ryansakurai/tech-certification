@@ -26,9 +26,30 @@ name: string
         error:
             code: string
             details: string
+    Meaning: The email is already in use.
 ```
 
 #### GET `/{studentEmail}`
+
+- Path Variable
+
+```yaml
+studentEmail: string
+```
+
+- Response
+
+```yaml
+200 - OK:
+    Body:
+        email: string
+        fullName: string
+        certifications:
+            - id: UUID (string)
+            technology: string
+404 - Not Found:
+    Meaning: The student does not exist.
+```
 
 #### PATCH `/{studentEmail}`
 

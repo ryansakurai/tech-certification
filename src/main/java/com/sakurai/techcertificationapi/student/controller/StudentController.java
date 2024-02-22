@@ -50,6 +50,19 @@ public class StudentController {
     }
 
 
+    @GetMapping("/{studentEmail}")
+    public ResponseEntity<GetStudentDto> getStudentByEmail(@PathVariable String studentEmail,
+                                                           UriComponentsBuilder ucb) {
+        try {
+            var student = service.getStudentByEmail(studentEmail);
+            return ResponseEntity.ok().body(student);
+        }
+        catch(ResourceNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
     @PatchMapping("/{studentEmail}")
     public ResponseEntity<Object> updateStudentEmail(@PathVariable String studentEmail,
                                                      @RequestBody StudentEmailUpdateDto newEmail,
@@ -68,19 +81,6 @@ public class StudentController {
         }
         catch(EmailAlreadyInUseException e) {
             return ResponseEntity.status(409).body( new ErrorDtoWrapper("emailAlreadyInUse", e.getMessage()) );
-        }
-    }
-
-
-    @GetMapping("/{studentEmail}")
-    public ResponseEntity<GetStudentDto> getStudentByEmail(@PathVariable String studentEmail,
-                                                           UriComponentsBuilder ucb) {
-        try {
-            var student = service.getStudentByEmail(studentEmail);
-            return ResponseEntity.ok().body(student);
-        }
-        catch(ResourceNotFoundException e) {
-            return ResponseEntity.notFound().build();
         }
     }
 

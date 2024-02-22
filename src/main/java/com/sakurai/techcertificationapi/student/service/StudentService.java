@@ -42,21 +42,6 @@ public class StudentService {
     }
 
 
-    public Student updateStudentEmail(String studentEmail, StudentEmailUpdateDto studentDto) throws InvalidKeyException {
-        Optional<Student> student = studentRepository.findByEmail(studentEmail);
-        if(student.isEmpty())
-            throw new InvalidKeyException("email", studentEmail);
-
-        try {
-            student.get().setEmail(studentDto.getEmail());
-            return studentRepository.save(student.get());
-        }
-        catch(DataIntegrityViolationException e) {
-            throw new EmailAlreadyInUseException(studentDto.getEmail());
-        }
-    }
-
-
     public GetStudentDto getStudentByEmail(String email) throws ResourceNotFoundException {
         Optional<Student> student = studentRepository.findByEmail(email);
         if(student.isEmpty())
@@ -79,6 +64,21 @@ public class StudentService {
             output.add(dto);
         }
         return output;
+    }
+
+
+    public Student updateStudentEmail(String studentEmail, StudentEmailUpdateDto studentDto) throws InvalidKeyException {
+        Optional<Student> student = studentRepository.findByEmail(studentEmail);
+        if(student.isEmpty())
+            throw new InvalidKeyException("email", studentEmail);
+
+        try {
+            student.get().setEmail(studentDto.getEmail());
+            return studentRepository.save(student.get());
+        }
+        catch(DataIntegrityViolationException e) {
+            throw new EmailAlreadyInUseException(studentDto.getEmail());
+        }
     }
 
 }

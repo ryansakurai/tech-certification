@@ -26,7 +26,7 @@ name: string
         error:
             code: string
             details: string
-    Meaning: The email is already in use.
+    Meaning: Email is already in use.
 ```
 
 #### GET `/{studentEmail}`
@@ -48,10 +48,38 @@ studentEmail: string
             - id: UUID (string)
             technology: string
 404 - Not Found:
-    Meaning: The student does not exist.
+    Meaning: Student does not exist.
 ```
 
 #### PATCH `/{studentEmail}`
+
+- Path Variable
+
+```yaml
+studentEmail: string
+```
+
+- Request Body
+
+```yaml
+email: string
+```
+
+- Response
+
+```yaml
+200 - OK:
+    Headers:
+        Location: URI (string)
+404 - Not Found:
+    Meaning: Student specified in path variable does not exist.
+409 - Conflict:
+    Body:
+        error:
+            code: string
+            details: string
+    Meaning: E-mail specified in request body is already in use.
+```
 
 ### /questions
 

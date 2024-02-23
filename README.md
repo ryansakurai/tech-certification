@@ -1,14 +1,30 @@
-# Tech Certification API
+<h1 align="center">  💻  Tech Certification API  💻  </h1>
 
 A REST API that allows students to answer questions and get their certifications developed using:
-- ☕ Java
-- 🍂 Spring Boot
+- Java
+- Spring Boot
     - Spring MVC
     - Spring Data JPA
     - Hibernate
-- 🌶 Lombok
-- 🐘 PostgreSQL
-- 🐳 Docker
+- Lombok
+- PostgreSQL
+- Docker
+
+## 🚀 Running
+
+To run the application, you'll have to have JRE, Maven and Docker installed in your machine. To start the database container on port 5432, run the following command:
+
+```bash
+docker-compose up
+```
+
+Then, to start the application on port 8085, run the following command:
+
+```bash
+mvn spring-boot:run
+```
+
+To alter any of the ports, go to `/docker-compose.yml` and `/src/main/resources/application.properties`.
 
 ## ⚙️ Behavior
 

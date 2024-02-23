@@ -130,6 +130,82 @@ technology: string
 
 #### POST
 
+- Request Body
+
+```yaml
+email: string
+technology: string
+answers:
+    - questionId: UUID (string)
+      alternativeId: UUID (string)
+```
+
+- Response
+
+```yaml
+201 - Created:
+    Headers:
+        Location: URI (string)
+404 - Not Found:
+    Meaning: Either one of the resources referenced in request body (student, question and alternative) does not exist or technology, question and alternative are conflictant.
+```
+
 #### GET `/{certificationId}`
 
+- Path Variable
+
+```yaml
+certificationId: string
+```
+
+- Response
+
+```yaml
+200 - OK:
+    Body:
+        id: UUID (string)
+        technology: string
+        grade: float
+        timeOfEmition: datetime (string)
+        answers:
+            - question:
+                  id: UUID (string)
+                  description: string
+              chosenAlternative:
+                  id: UUID (string)
+                  description: string
+              correct: boolean
+404 - Not Found:
+    Body:
+        error:
+            code: string
+            details: string
+    Meaning: Certification does not exist.
+```
+
 #### GET `/{technology}/rankings/{quantity}`
+
+- Path Variables
+
+```yaml
+technology: string
+quantity: integer
+```
+
+- Response
+
+```yaml
+200 - OK:
+    Body:
+        - id: UUID (string)
+          grade: float
+          student:
+              email: string
+              name: string
+404 - Not Found:
+    Body:
+        error:
+            code: string
+            details: string
+    Meaning: No certifications found for the specified technology.
+```

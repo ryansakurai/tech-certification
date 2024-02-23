@@ -2,7 +2,7 @@
 
 ## ⚙️ Behavior
 
-All endpoints consume and produce JSON.
+All endpoints consume and produce JSON and the following documentation uses mostly [YAML](https://en.wikipedia.org/wiki/YAML)
 
 ### /students
 
@@ -72,7 +72,7 @@ email: string
     Headers:
         Location: URI (string)
 404 - Not Found:
-    Meaning: Student specified in path variable does not exist.
+    Meaning: Student referenced in path variable does not exist.
 409 - Conflict:
     Body:
         error:
@@ -84,6 +84,24 @@ email: string
 ### /questions
 
 #### POST
+
+- Request Body
+
+```yaml
+technology: string
+description: string
+alternatives:
+    - description: string
+      correct: boolean
+```
+
+- Response
+
+```yaml
+201 - Created:
+    Headers:
+        Location: URI (string)
+```
 
 #### GET `/{technology}`
 

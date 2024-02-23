@@ -105,6 +105,27 @@ alternatives:
 
 #### GET `/{technology}`
 
+- Path Variable
+
+```yaml
+technology: string
+```
+
+- Response
+
+```yaml
+200 - OK:
+    Body:
+        - id: UUID (string)
+          technology: string
+          description: string
+          alternatives:
+              - id: UUID (string)
+                description: string
+404 - Not Found:
+    Meaning: No questions found for the specified technology.
+```
+
 ### /certifications
 
 #### POST

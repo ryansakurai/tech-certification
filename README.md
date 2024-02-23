@@ -1,11 +1,9 @@
 <h1 align="center">  💻  Tech Certification API  💻  </h1>
 
 A REST API that allows students to answer questions and get their certifications developed using:
+
 - Java
 - Spring Boot
-    - Spring MVC
-    - Spring Data JPA
-    - Hibernate
 - Lombok
 - PostgreSQL
 - Docker

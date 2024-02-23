@@ -10,7 +10,18 @@ A REST API that allows students to answer questions and get their certifications
 - PostgreSQL
 - Docker
 
-## 🚀 Running
+## 🚀 Features
+
+- [x] Register students
+- [x] Get students by e-mail
+- [x] Update students' e-mails
+- [x] Register multiple choice questions for a specific technology
+- [x] Get all questions for a technology
+- [x] Submit answers and get certified
+- [x] Check all details of a certification
+- [x] Get arbitrary size rankings of certification grades for a technology
+
+## 🏁 How to Run
 
 To run the application, you'll have to have JRE, Maven and Docker installed in your machine. To start the database container on port 5432, run the following command:
 

@@ -1,5 +1,15 @@
 # Tech Certification API
 
+A REST API that allows students to answer questions and get their certifications developed using:
+- ☕ Java
+- 🍂 Spring Boot
+    - Spring MVC
+    - Spring Data JPA
+    - Hibernate
+- 🌶 Lombok
+- 🐘 PostgreSQL
+- 🐳 Docker
+
 ## ⚙️ Behavior
 
 All endpoints consume and produce JSON and the following documentation uses mostly [YAML](https://en.wikipedia.org/wiki/YAML)

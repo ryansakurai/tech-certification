@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationapi.question.model;
+package com.sakurai.techcertificationapi.certification.dto;
 
 import java.util.UUID;
 
@@ -8,10 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class PublicAlternativeDto {
+public class AlternativeDto {
 
     private UUID id;
     private String description;

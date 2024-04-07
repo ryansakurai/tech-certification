@@ -15,10 +15,10 @@ import com.sakurai.techcertificationapi.exception.EmailAlreadyInUseException;
 import com.sakurai.techcertificationapi.exception.ErrorDtoWrapper;
 import com.sakurai.techcertificationapi.exception.InvalidKeyException;
 import com.sakurai.techcertificationapi.exception.ResourceNotFoundException;
-import com.sakurai.techcertificationapi.student.model.GetStudentDto;
+import com.sakurai.techcertificationapi.student.dto.GetStudentDto;
+import com.sakurai.techcertificationapi.student.dto.StudentEmailUpdateDto;
+import com.sakurai.techcertificationapi.student.dto.StudentRegistrationDto;
 import com.sakurai.techcertificationapi.student.model.Student;
-import com.sakurai.techcertificationapi.student.model.StudentEmailUpdateDto;
-import com.sakurai.techcertificationapi.student.model.StudentRegistrationDto;
 import com.sakurai.techcertificationapi.student.service.StudentService;
 
 import org.springframework.beans.factory.annotation.Autowired;

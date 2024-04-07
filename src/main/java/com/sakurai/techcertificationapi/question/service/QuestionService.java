@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sakurai.techcertificationapi.exception.ResourceNotFoundException;
+import com.sakurai.techcertificationapi.question.dto.PublicAlternativeDto;
+import com.sakurai.techcertificationapi.question.dto.PublicQuestionDto;
+import com.sakurai.techcertificationapi.question.dto.RegistrationAlternativeDto;
+import com.sakurai.techcertificationapi.question.dto.RegistrationQuestionDto;
 import com.sakurai.techcertificationapi.question.model.Alternative;
-import com.sakurai.techcertificationapi.question.model.PublicAlternativeDto;
-import com.sakurai.techcertificationapi.question.model.PublicQuestionDto;
 import com.sakurai.techcertificationapi.question.model.Question;
-import com.sakurai.techcertificationapi.question.model.RegistrationAlternativeDto;
-import com.sakurai.techcertificationapi.question.model.RegistrationQuestionDto;
 import com.sakurai.techcertificationapi.question.repository.QuestionRepository;
 
 @Service

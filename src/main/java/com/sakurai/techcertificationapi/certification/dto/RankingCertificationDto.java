@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationapi.certification.model;
+package com.sakurai.techcertificationapi.certification.dto;
 
 import java.util.UUID;
 
@@ -7,13 +7,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class QuestionDto {
+public class RankingCertificationDto {
 
     private UUID id;
-    private String description;
-
+    private double grade;
+    private RankingStudentDto student;
+    
 }

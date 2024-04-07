@@ -7,17 +7,16 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.sakurai.techcertificationapi.certification.model.AlternativeDto;
+import com.sakurai.techcertificationapi.certification.dto.AlternativeDto;
+import com.sakurai.techcertificationapi.certification.dto.AnswerDto;
+import com.sakurai.techcertificationapi.certification.dto.CertificationDto;
+import com.sakurai.techcertificationapi.certification.dto.QuestionDto;
+import com.sakurai.techcertificationapi.certification.dto.RankingCertificationDto;
+import com.sakurai.techcertificationapi.certification.dto.RankingStudentDto;
+import com.sakurai.techcertificationapi.certification.dto.SubmitionAnswerDto;
+import com.sakurai.techcertificationapi.certification.dto.SubmitionDto;
 import com.sakurai.techcertificationapi.certification.model.Answer;
-import com.sakurai.techcertificationapi.certification.model.AnswerDto;
 import com.sakurai.techcertificationapi.certification.model.Certification;
-import com.sakurai.techcertificationapi.certification.model.CertificationDto;
-import com.sakurai.techcertificationapi.certification.model.QuestionDto;
-import com.sakurai.techcertificationapi.certification.model.RankingCertificationDto;
-import com.sakurai.techcertificationapi.certification.model.RankingStudentDto;
-import com.sakurai.techcertificationapi.certification.model.SubmitionAnswerDto;
-import com.sakurai.techcertificationapi.certification.model.SubmitionDto;
 import com.sakurai.techcertificationapi.certification.repository.CertificationRepository;
 import com.sakurai.techcertificationapi.exception.InvalidKeyException;
 import com.sakurai.techcertificationapi.exception.ResourceNotFoundException;

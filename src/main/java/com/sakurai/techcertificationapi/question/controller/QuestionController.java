@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sakurai.techcertificationapi.exception.ResourceNotFoundException;
-import com.sakurai.techcertificationapi.question.model.PublicQuestionDto;
+import com.sakurai.techcertificationapi.question.dto.PublicQuestionDto;
+import com.sakurai.techcertificationapi.question.dto.RegistrationQuestionDto;
 import com.sakurai.techcertificationapi.question.model.Question;
-import com.sakurai.techcertificationapi.question.model.RegistrationQuestionDto;
 import com.sakurai.techcertificationapi.question.service.QuestionService;
 
 

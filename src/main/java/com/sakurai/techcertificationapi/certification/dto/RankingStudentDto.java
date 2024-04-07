@@ -1,6 +1,4 @@
-package com.sakurai.techcertificationapi.certification.model;
-
-import java.util.UUID;
+package com.sakurai.techcertificationapi.certification.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AlternativeDto {
+public class RankingStudentDto {
 
-    private UUID id;
-    private String description;
+    private String email;
+    private String name;
 
 }

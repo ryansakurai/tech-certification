@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
+import com.sakurai.techcertificationapi.certification.dto.SubmitionDto;
 import com.sakurai.techcertificationapi.certification.model.Certification;
-import com.sakurai.techcertificationapi.certification.model.SubmitionDto;
 import com.sakurai.techcertificationapi.certification.service.CertificationService;
 import com.sakurai.techcertificationapi.exception.ErrorDtoWrapper;
 import com.sakurai.techcertificationapi.exception.InvalidKeyException;

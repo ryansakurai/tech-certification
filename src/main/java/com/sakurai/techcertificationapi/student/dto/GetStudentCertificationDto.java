@@ -1,4 +1,4 @@
-package com.sakurai.techcertificationapi.student.model;
+package com.sakurai.techcertificationapi.student.dto;
 
 import java.util.UUID;
 

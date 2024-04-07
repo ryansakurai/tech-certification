@@ -1,7 +1,6 @@
-package com.sakurai.techcertificationapi.certification.model;
+package com.sakurai.techcertificationapi.certification.dto;
 
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

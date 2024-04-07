@@ -1,20 +1,21 @@
-package com.sakurai.techcertificationapi.question.model;
+package com.sakurai.techcertificationapi.question.dto;
 
 import java.util.List;
-
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class RegistrationQuestionDto {
+public class PublicQuestionDto {
 
+    private UUID id;
     private String technology;
     private String description;
-    private List<RegistrationAlternativeDto> alternatives;
+    private List<PublicAlternativeDto> alternatives;
 
 }

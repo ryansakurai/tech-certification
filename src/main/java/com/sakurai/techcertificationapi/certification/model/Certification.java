@@ -1,6 +1,6 @@
 package com.sakurai.techcertificationapi.certification.model;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,7 +36,7 @@ public class Certification {
     private UUID id;
 
     @CreationTimestamp
-    private LocalDateTime creationTime;
+    private OffsetDateTime creationTime;
 
 
     @Column(length = 50)

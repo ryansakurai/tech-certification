@@ -1,6 +1,6 @@
 package com.sakurai.techcertificationapi.certification.dto;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class CertificationDto {
     private UUID id;
     private String technology;
     private double grade;
-    private LocalDateTime timeOfEmition;
+    private OffsetDateTime timeOfEmition;
     private List<AnswerDto> answers;
     
 }

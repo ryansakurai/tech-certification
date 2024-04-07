@@ -1,6 +1,6 @@
 package com.sakurai.techcertificationapi.question.model;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,7 +28,7 @@ public class Alternative {
     private UUID id;
 
     @CreationTimestamp
-    private LocalDateTime creationTime;
+    private OffsetDateTime creationTime;
 
 
     @Column

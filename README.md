@@ -47,7 +47,7 @@ All endpoints consume and produce JSON and the following documentation uses most
 
 ```yaml
 email: string
-name: string
+fullName: string
 ```
 
 - Response
